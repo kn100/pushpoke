@@ -1,0 +1,50 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+
+.poke-monitor {
+  text-align:center;
+}
+
+.poke-monitor > .header {
+  background-color:#DDD;
+  font-weight:bold;
+}
+
+.poke-monitor > .display {
+  font-size:32px;
+  padding-top:20px;
+  padding-bottom:20px;
+  background-color:#EFEFEF;
+}
+
+.pokeification {
+  background-color:#ffffff;
+  padding:20px;
+  border-radius:20px;
+  margin-bottom:20px;
+}
+
+.poker {
+  display:inline-block;
+  font-size:24px;
+  font-weight:700;
+}
+
+.poke-maker {
+  padding:30px;
+  width:600px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.pokeman {
+  background-color:white;
+}
