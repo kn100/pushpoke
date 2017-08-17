@@ -80,7 +80,7 @@
             <div class="content">
                 <div class="title m-b-md">
                     <img src="/img/logo.png" style="width:500px" alt="pokenpush logo"/>
-                    <p>Revolutionary social networking, with a poke</p>
+                    <p>Revolutionary social networking, with a poke.</p>
                 </div>
             </div>
         </div>

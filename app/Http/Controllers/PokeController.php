@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\PokeUser;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Events\PersonPoked;
@@ -83,12 +84,19 @@ class PokeController extends Controller
     {
         //
     }
+
+    /* Poke accepts a Request object that should contain in its params the
+       pokee (the person being poked). It then creates a record in the DB to
+       persistently store this poke, as well as broadcasting the event*/
     public function poke(Request $request)
     {
       $pokeRecord = new PokeUser;
       $pokeRecord->user_id = Auth::user()->id;
       $pokeRecord->poked_user_id=$request->pokee;
       $pokeRecord->save();
-      broadcast(new PersonPoked($pokeRecord));
+
+      $poker = User::find(Auth::user()->id)->name;
+      $pokee = User::find(2)->name;
+      broadcast(new PersonPoked($pokeRecord,$pokee,$poker));
     }
 }

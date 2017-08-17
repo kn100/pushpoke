@@ -1,26 +1,10 @@
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
 
-window.Vue = require('vue');
+var userid = $("#userid").val();
+var username = $("#username").val();
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-Vue.component('example', require('./components/Example.vue'));
-
-const app = new Vue({
-    el: '#app'
-});
-
+// pokeSubmit submits a poke to the server, which submits it to the Pokees chan.
+// Pokee is the ID of the user that is being poked.
 function pokeSubmit(pokee) {
   $.ajaxSetup({
     headers: {
@@ -31,18 +15,46 @@ function pokeSubmit(pokee) {
    url: '/poke',
    type: 'POST',
    data: {pokee: pokee},
-   success: function(data)
-   {
-     console.log($(data));
-   },
    error: function(data)
    {
-     console.log("crap");
+     console.log("Something caught fire, probably server related!");
    }
  });
 }
+
+// Listener to submit a poke and update the UI when the user clicks the Poke btn
 $("#pokebutton").on("click",function(){
   var toPoke = $("#pokee").val();
-  //alert("poking"+toPoke);
+  var pokeeName = $("#pokee option:selected").text();
   pokeSubmit(toPoke);
+  pokify(username,pokeeName)
 })
+
+// Laravel Echo Gotcha:You need to preface events with a period for some reason.
+/* This is the listener that makes use of Laravel Echo to listen to the correct
+/  channel for the user.*/
+Echo.channel('user.'+userid)
+.listen('.poke', (e) => {
+        console.log("Pusher sent something");
+        console.log(e);
+        //increase poke count by one
+        incrementPokes(".pokesRecvd");
+        //add notification
+        pokify(e.poker,e.pokee);
+    });
+
+/* This function accepts a string that references the class or ID to have
+/  its innards incremented by one. It also increments the total by one. */
+function incrementPokes(counter){
+  var toIncrement = $(counter).html().trim();
+  var totalP = $(".pokeTotal").html().trim();
+  $(counter).html(parseInt(toIncrement)+1);
+  $(".pokeTotal").html(parseInt(totalP)+1);
+}
+
+// This function adds a notification to the users browser concerning a poke.
+// Poker is the person doing the poking, and Pokee is the person recieving.
+function pokify(poker,pokee) {
+  var pokification = "<div class='pokeification'>"+poker+">>"+pokee+"</div>";
+  $(".poketivity").prependhto(pokification);
+}

@@ -25,9 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::all()->except(Auth::id());
-        $pokesGiven = PokeUser::get()->where('user_id',Auth::id())->count();
-        $pokesRecvd = PokeUser::get()->where('poked_user_id',Auth::id())->count();
-        return view('home',compact('users','pokesGiven','pokesRecvd'));
+        $userid = Auth::id();
+        $users = User::all()->except($userid);
+        $pokesGiven = PokeUser::get()->where('user_id',$userid)->count();
+        $pokesRecvd = PokeUser::get()->where('poked_user_id',$userid)->count();
+        return view('home',compact('users','pokesGiven','pokesRecvd','userid'));
     }
 }

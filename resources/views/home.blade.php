@@ -13,7 +13,7 @@
       <div class="header">
         Pokes recieved
       </div>
-      <div class="display pokesGiven">
+      <div class="display pokesRecvd">
         {{$pokesRecvd}}
       </div>
     </div>
@@ -21,7 +21,7 @@
       <div class="header">
         Pokes sent
       </div>
-      <div class="display pokesRecvd">
+      <div class="display pokesGiven">
         {{$pokesGiven}}
       </div>
     </div>
@@ -29,7 +29,7 @@
       <div class="header">
         Total pokes
       </div>
-      <div class="display">
+      <div class="display pokeTotal">
         {{$pokesRecvd+$pokesGiven}}
       </div>
     </div>
@@ -68,17 +68,9 @@
   </div>
   <div class="row">
     <div class="col-xs-12 poketivity">
-      <div class="pokeification">
-        <div class="poker">
-          Kev >> Hugo
-        </div>
-      </div>
-      <div class="pokeification">
-        <div class="poker">
-          Kev >> Hugo
-        </div>
-      </div>
     </div>
   </div>
 </div>
+<input type="hidden" name="userid" id="userid" value="{{$userid}}"/>
+<input type="hidden" name="username" id="username" value="{{ Auth::user()->name }}"/>
 @endsection
